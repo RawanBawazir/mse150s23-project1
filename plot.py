@@ -3,7 +3,7 @@ import numpy as np
 import sys
 
 filename = sys.argv[1]        # Stores ARG1 in filename, as in: $ python plot.py ARG1 ARG2 
-data = np.loadtxt(filename)   # Attempts to load filename into local variable data.
+data = np.loadtxt(filename, comments='"')   # Attempts to load filename into local variable data.
 
 ## Part 0
 # Figure out what arguments to add to the loadtxt function call
@@ -20,6 +20,15 @@ data = np.loadtxt(filename)   # Attempts to load filename into local variable da
 # plot raw-data/Sp22_245L_sec-001_tensiletest-pekk_bulk.raw
 # Make sure to include axis labels and units!
 # plt.plot(xdata, ydata, arguments-to-make-plot-pretty)
+stress=data[:,1]
+strain=data[:,-1]
+name=filename.split('-')[-1][:-4]
+
+plt.plot(strain, stress, 'o', markersize=1)
+plt.xlabel('Strain (%)')
+plt.ylabel('Stress (Pa)')
+plt.title(f'{name} stress vs strain')
+plt.show()
 
 
 ## Part 2
@@ -33,6 +42,29 @@ data = np.loadtxt(filename)   # Attempts to load filename into local variable da
 # the stress-strain data. Plot your line against the data to make 
 # sure it makes sense! Use the slope of this line to calculate and print
 # the Young's modulus (with units!)
+# $ git ls-files | grep "raw_data/" | xargs -I{} sh -c 'python plot.py {}'
+if 'pekk' in name:
+    cutoff=3.1
+else:
+    cutoff=1.8
+
+idx=np.where(strain <cutoff)
+linear_strain=strain[idx]
+linear_stress=stress[idx]
+
+plt.plot(strain, stress, 'o', markersize=1, label='Original')
+plt.plot(linear_strain, linear_stress, markersize=1, label='Linear')
+plt.xlabel('Strain (%)')
+plt.ylabel('Stress (Pa)')
+plt.title(f'{name} stress vs strain')
+plt.legend()
+plt.show()
+
+A=np.vstack([np.ones(len(linear_strain)),linear_strain]).T
+
+c, m=np.linalg.lstsq(A, linear_stress, rcond=None)[0]
+
+print(f'Young\'s Modulus: {m} Pa')
 
 
 ## Part 4
@@ -40,5 +72,10 @@ data = np.loadtxt(filename)   # Attempts to load filename into local variable da
 # plots and Young's moduli for all of the cleaned up files in your data 
 # directory. If you haven't already, this is a good time to add text to 
 # your .gitignore file so you're not committing the figures to your repository.
-
-
+plt.plot(strain, stress, 'o', markersize=1, label='Original')
+plt.plot(linear_strain, linear_stress, markersize=1, label='Linear')
+plt.xlabel('Strain (%)')
+plt.ylabel('Stress (Pa)')
+plt.title(f'{name} Young\'s Modulus: {m:.2f} Pa ')
+plt.legend()
+plt.savefig(f'{name}.png')
