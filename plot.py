@@ -35,6 +35,8 @@ plt.show()
 # Check to see if your code in part 1 will plot all of the files in raw-data/
 # Edit the files (use git liberally here!) to make them more usable
 # Don't worry about deleting parts you might need later -- that's why we use git!
+# $ git ls-files | grep "raw_data/" | xargs -I{} sh -c 'python plot.py {}'
+
 
 
 ## Part 3
