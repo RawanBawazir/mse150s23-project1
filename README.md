@@ -54,7 +54,13 @@ pip install matplotlib~=3.5.2
 * GNU
 
 ## Additionally, a few sentences describing two things I learned
+
 Because I usally calculat the stres and strin with my calculator, and then I used Excel to plot the graphs, it take a long time for me to do it , so I learned that Python saves a lot of time and I can repet tha steps for multuple materals or data sets.
 
 GIt is an excellent program for sharing codes and files that contain codes. 
+
+in this project i learned and used the f-strings where is the goal of using it is make string interpolation simpler.
+
+for the aha moment, in the beginning i was just committing my work and i open git and i was not able to see the changes that i made and i noticed that i did not push !.
+
 
