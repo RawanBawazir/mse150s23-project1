@@ -53,4 +53,8 @@ pip install matplotlib~=3.5.2
 
 * GNU
 
+## Additionally, a few sentences describing two things I learned
+Because I usally calculat the stres and strin with my calculator, and then I used Excel to plot the graphs, it take a long time for me to do it , so I learned that Python saves a lot of time and I can repet tha steps for multuple materals or data sets.
+
+GIt is an excellent program for sharing codes and files that contain codes. 
 
